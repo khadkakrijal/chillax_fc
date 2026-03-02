@@ -24,3 +24,281 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* ===== Chillax FC Header FX ===== */
+
+/* ICE glow (left side) */
+.chillax-ice {
+  background:
+    radial-gradient(
+      circle at 30% 40%,
+      rgba(0, 170, 255, 0.55),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 60% 60%,
+      rgba(140, 240, 255, 0.35),
+      transparent 60%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.65),
+      rgba(230, 250, 255, 0.25)
+    );
+  filter: blur(0.5px) saturate(1.2);
+  animation: iceGlow 4.5s ease-in-out infinite;
+  opacity: 1;
+}
+
+@keyframes iceGlow {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.95;
+  }
+  50% {
+    transform: translateY(6px) scale(1.02);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.95;
+  }
+}
+
+/* RAIN streaks layer (left side) */
+.chillax-rain {
+  background: repeating-linear-gradient(
+    115deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 10px,
+    rgba(0, 160, 255, 0.35) 11px,
+    rgba(0, 160, 255, 0.35) 12px
+  );
+  opacity: 0.35;
+  filter: blur(0.2px);
+  animation: rainMove 0.65s linear infinite;
+  mix-blend-mode: multiply;
+}
+
+@keyframes rainMove {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 140px;
+  }
+}
+
+/* FIRE (right side): flame gradient + flicker */
+.chillax-fire {
+  background:
+    radial-gradient(
+      circle at 65% 55%,
+      rgba(255, 200, 80, 0.75),
+      transparent 45%
+    ),
+    radial-gradient(circle at 55% 70%, rgba(255, 90, 0, 0.65), transparent 55%),
+    radial-gradient(circle at 70% 35%, rgba(255, 40, 0, 0.55), transparent 55%),
+    conic-gradient(
+      from 210deg at 60% 70%,
+      rgba(255, 60, 0, 0),
+      rgba(255, 110, 0, 0.55),
+      rgba(255, 220, 120, 0.55),
+      rgba(255, 80, 0, 0.55),
+      rgba(255, 60, 0, 0)
+    );
+  filter: blur(0.6px) saturate(1.35);
+  animation:
+    fireFlicker 0.18s infinite alternate,
+    fireDrift 3.2s ease-in-out infinite;
+  opacity: 0.95;
+}
+
+@keyframes fireFlicker {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 0.9;
+  }
+  to {
+    transform: translateY(-2px) scale(1.01);
+    opacity: 1;
+  }
+}
+
+@keyframes fireDrift {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: -40px 18px;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+/* Wrapper with fade edges (premium effect) */
+.marquee-wrapper {
+  width: 420px;
+  max-width: 80vw;
+  overflow: hidden;
+  position: relative;
+}
+
+/* fade left/right edges */
+.marquee-wrapper::before,
+.marquee-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 60px;
+  height: 100%;
+  z-index: 2;
+}
+
+.marquee-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.8), transparent);
+}
+
+.marquee-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
+}
+
+/* Text animation */
+.marquee-slow {
+  white-space: nowrap;
+  display: inline-block;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  font-size: clamp(1.1rem, 2vw, 1.7rem);
+  color: rgba(255, 255, 255, 0.95);
+  text-transform: uppercase;
+
+  animation: smoothSlide 14s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  will-change: transform;
+}
+
+@keyframes smoothSlide {
+  0% {
+    transform: translateX(110%);
+  }
+  100% {
+    transform: translateX(-120%);
+  }
+}
+
+/* accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-slow {
+    animation: none;
+  }
+}
+
+.marquee-wrapper {
+  width: 420px;
+  max-width: 85vw;
+  overflow: hidden;
+  position: relative;
+  --gap: 4rem;
+}
+
+/* optional fade edges */
+.marquee-wrapper::before,
+.marquee-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 60px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.marquee-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.8), transparent);
+}
+.marquee-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
+}
+
+/* Track */
+.marquee-track {
+  display: flex;
+  width: max-content;
+
+  /* GPU smooth */
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+
+  animation: marqueeSlide 16s linear infinite;
+}
+
+/* Each group includes its own spacing so the loop distance is perfect */
+.marquee-group {
+  display: flex;
+  padding-right: var(--gap);
+}
+
+.marquee-text {
+  white-space: nowrap;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  font-size: clamp(1.1rem, 2vw, 1.7rem);
+  color: rgba(255, 255, 255, 0.95);
+  text-transform: uppercase;
+}
+
+@keyframes marqueeSlide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* TEAM INFINITE SLIDER */
+
+.team-track {
+  display: flex;
+  gap: 40px;
+  width: max-content;
+
+  animation: teamSlide 70s linear infinite;
+}
+
+/* ✅ pause animation when hovering track */
+.team-track:hover {
+  animation-play-state: paused;
+}
+
+.team-card {
+  min-width: 300px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.team-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(255, 255, 255, 0.15);
+}
+@keyframes teamSlide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
