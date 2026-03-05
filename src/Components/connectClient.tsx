@@ -83,7 +83,7 @@ export default function ConnectPage() {
         fill="white"
       />
 
-      <div className="relative z-10 max-w-3xl mx-auto px-4 pt-28 pb-16">
+      <div className="relative z-10 max-w-3xl mx-auto px-4 md:pt-28 pb-16">
         <div className="text-center mb-10">
           <p className="text-xs uppercase tracking-[0.35em] text-white/60">
             Chillax FC • Darwin

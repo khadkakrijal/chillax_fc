@@ -32,7 +32,7 @@ export default function PlayerProfilePage({ player }: { player: Player }) {
   const aboutText = player.bio || player.history || "";
 
   return (
-    <div className="min-h-screen relative text-white overflow-hidden pt-24">
+    <div className="min-h-screen relative text-white overflow-hidden md:pt-24">
       {/* ✅ Background Image (cinematic) */}
       <div
         className="absolute inset-0 bg-cover bg-center scale-110 blur-[2px] opacity-35"

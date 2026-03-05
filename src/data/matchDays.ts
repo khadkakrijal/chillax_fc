@@ -19,7 +19,7 @@ export const matchDays: MatchDay[] = [
     year: 2025,
     stage: "Final",
     team: "Chillax FC",
-    opponent: "Grace International",
+    opponent: "Northern Nepaleese",
     outcomeLabel: "Champions 🏆",
     outcomeType: "winner",
     location: "Darwin, NT",

@@ -21,7 +21,7 @@ function outcomeStyles(type: MatchDay["outcomeType"]) {
 
 export default function MatchDaysSection({ items }: { items: MatchDay[] }) {
   return (
-    <section className="relative py-20 overflow-hidden pt-34">
+    <section className="relative py-20 overflow-hidden md:pt-34">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-black" />
       <div className="absolute inset-0 opacity-[0.10] bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.45)_1px,transparent_0)] [background-size:26px_26px]" />
@@ -90,7 +90,7 @@ export default function MatchDaysSection({ items }: { items: MatchDay[] }) {
                   </p>
                 )}
 
-                <div className="flex items-center justify-between pt-2">
+                <div className="flex md:flex md:flex-row flex-col md:gap-0 gap-2 items-center justify-between pt-2">
                   <Badge className="bg-white/10 text-white border border-white/10">
                     Tournament
                   </Badge>

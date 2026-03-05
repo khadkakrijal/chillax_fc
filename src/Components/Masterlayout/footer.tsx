@@ -116,7 +116,7 @@ const Footer = () => {
               <li>
                 <Link
                   className="text-white/85 hover:text-white transition"
-                  href="/matches"
+                  href="/match"
                 >
                   Matches
                 </Link>

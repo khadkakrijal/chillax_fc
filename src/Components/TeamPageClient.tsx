@@ -91,7 +91,7 @@ export default function TeamPageClient({ players }: { players: Player[] }) {
       />
       <div className="absolute inset-0 bg-black/75" />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 pt-28 pb-16">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 md:pt-28 pb-16">
         {/* Header */}
         <div className="text-center mb-10">
           <p className="text-xs uppercase tracking-[0.35em] text-white/60">

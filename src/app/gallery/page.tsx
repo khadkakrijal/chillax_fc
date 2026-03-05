@@ -47,7 +47,7 @@ export default async function GalleryPage() {
       />
 
       {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 pt-28 pb-16">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 md:pt-28 pb-16">
         <div className="text-center mb-10">
           <p className="text-xs uppercase tracking-[0.35em] text-white/60">
             Chillax FC

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Image from "next/image";
+import { createPortal } from "react-dom";
 
 export default function GalleryGrid({ images }: { images: string[] }) {
   const [open, setOpen] = React.useState(false);
@@ -62,63 +63,69 @@ export default function GalleryGrid({ images }: { images: string[] }) {
       </div>
 
       {/* Lightbox */}
-      {open && (
-        <div className="fixed inset-0 z-[999] bg-black/85 backdrop-blur-sm">
-          <div className="absolute inset-0" onClick={close} />
+      {open &&
+        typeof window !== "undefined" &&
+        createPortal(
+          <div className="fixed inset-0 z-[9999] bg-black/85 backdrop-blur-sm">
+            <div className="absolute inset-0" onClick={close} />
 
-          <div className="relative h-full w-full flex items-center justify-center px-4">
-            <div className="relative w-full max-w-5xl">
-              {/* Top controls */}
-              <div className="absolute -top-14 left-0 right-0 flex items-center justify-between text-white">
-                <p className="text-sm text-white/75">
-                  {activeIndex + 1} / {images.length}
-                </p>
+            <div className="relative h-full w-full flex items-center justify-center px-4 py-8">
+              <div
+                className="relative w-full max-w-5xl"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Top controls */}
+                <div className="mb-3 flex items-center justify-between text-white">
+                  <p className="text-sm text-white/75">
+                    {activeIndex + 1} / {images.length}
+                  </p>
 
-                <button
-                  onClick={close}
-                  className="rounded-full border border-white/20 bg-white/10 px-4 py-2 hover:bg-white hover:text-black transition"
-                >
-                  Close ✕
-                </button>
-              </div>
+                  <button
+                    onClick={close}
+                    className="rounded-full cursor-pointer border border-white/20 bg-white/10 px-4 py-2 hover:bg-white hover:text-black transition"
+                  >
+                    Close ✕
+                  </button>
+                </div>
 
-              {/* Image */}
-              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/15 bg-black">
-                <Image
-                  src={images[activeIndex]}
-                  alt={`Preview ${activeIndex + 1}`}
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
+                {/* Image */}
+                <div className="relative w-full max-w-2xl mx-auto h-[65vh] overflow-hidden rounded-2xl border border-white/15 bg-black">
+                  <Image
+                    src={images[activeIndex]}
+                    alt={`Preview ${activeIndex + 1}`}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
 
-              {/* Bottom nav */}
-              <div className="mt-4 flex items-center justify-between">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    prev();
-                  }}
-                  className="rounded-full border border-white/20 bg-white/10 px-5 py-2 hover:bg-white hover:text-black transition"
-                >
-                  ← Prev
-                </button>
+                {/* Bottom nav */}
+                <div className="mt-4 flex items-center justify-between">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      prev();
+                    }}
+                    className="rounded-full cursor-pointer text-white border border-white/20 bg-white/10 px-5 py-2 hover:bg-white hover:text-black transition"
+                  >
+                    ← Prev
+                  </button>
 
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    next();
-                  }}
-                  className="rounded-full border border-white/20 bg-white/10 px-5 py-2 hover:bg-white hover:text-black transition"
-                >
-                  Next →
-                </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      next();
+                    }}
+                    className="rounded-full cursor-pointer text-white border border-white/20 bg-white/10 px-5 py-2 hover:bg-white hover:text-black transition"
+                  >
+                    Next →
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </>
   );
 }

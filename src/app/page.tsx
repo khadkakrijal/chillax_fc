@@ -3,6 +3,7 @@ import CoverPage from "@/Components/HeroSection/Cover";
 import GallerySlider from "@/Components/HeroSection/gallerySectionSlider";
 import TeamSection from "@/Components/HeroSection/Teamsection";
 import JoinTeamCTA from "@/Components/JoinTeamCTA";
+import VoicesSection from "@/Components/voiceSection";
 import { getGalleryImages } from "@/lib/getGalleryImages";
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
       <TeamSection />
       <ClubShowcaseSection memories={memories} />
       <JoinTeamCTA />
+      <VoicesSection/>
     </div>
   );
 }

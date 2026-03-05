@@ -1,126 +1,186 @@
 "use client";
 
-import React from "react";
-import { useEffect, useState } from "react";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../../../public/logo.png";
-import menudown from "../../../../public/menu down.png";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
+import { FiMenu, FiX, FiChevronDown } from "react-icons/fi";
 
-interface MobNavProps {}
+const MobNav = () => {
+  const pathname = usePathname();
 
-const MobNav: React.FC<MobNavProps> = () => {
-  const router = useRouter();
-  const [dropdown, setDropdown] = useState(false);
-  const [activeLink, setActiveLink] = useState("");
+  const [open, setOpen] = useState(false);
+  const [connectOpen, setConnectOpen] = useState(false);
 
-  const showDropdown = () => {
-    setDropdown(!dropdown);
-  };
-  const nav = [
-    {
-      name: "upcoming events",
-      link: "/events?type=upcomingevents",
-    },
-    {
-      name: "past events",
-      link: "/events?type=pastevents",
-    },
-    {
-      name: "Gallery",
-      link: "/gallery",
-    },
-    {
-      name: "Connect",
-      link: "/connect",
-    },
-  ];
+  const socials = useMemo(
+    () => [
+      { name: "Facebook", link: "#" },
+      { name: "Instagram", link: "#" },
+      { name: "LinkedIn", link: "#" },
+      { name: "Youtube", link: "#" },
+      { name: "Email", link: "#" },
+      { name: "Messenger", link: "#" },
+    ],
+    [],
+  );
 
-  const connect = [
-    { name: "Facebook", link: "" },
-    { name: "Instagram", link: "" },
-    { name: "Linkedlin", link: "" },
-    { name: "Youtube", link: "" },
-    { name: "Email", link: "" },
-    { name: "Messenger", link: "" },
-  ];
+  // Close when route changes
+  useEffect(() => {
+    setOpen(false);
+    setConnectOpen(false);
+  }, [pathname]);
+
+  // Lock background scroll when drawer is open
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    if (open) document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  const linkClass = (active: boolean) =>
+    `flex items-center justify-between w-full rounded-xl px-4 py-4 text-base font-semibold uppercase tracking-wide transition
+     ${active ? "bg-black text-white" : "bg-black/[0.03] text-black hover:bg-black/10"}`;
+
   return (
     <>
-      <div>
-        <nav className="z-30 bg-white border-b-2 shadow-2xl border-gray-600 text-gray-800 fixed flex z-10 top-0 h-16 justify-center items-center mx-auto font-abel-pro">
-          <Link href="/" className=" pl-3 ">
-            <Image className=" w-24 h-9 px-0 " src={logo} alt="logo" />
+      {/* Top mobile bar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-black/10">
+        <div className="h-16 flex items-center justify-between px-4">
+          <Link href="/" aria-label="Home" className="flex items-center gap-3">
+            <Image src={logo} alt="logo" className="h-10 w-auto" priority />
           </Link>
-          <ul className="w-screen flex   px-24 text-2xl inset-0  items-center text-center">
-            <li>
-              <button onClick={showDropdown}>
-                <div className="flex gap-2 justify-center uppercase items-center">
-                  <h1 className="text-black text-[20x] font-bold font-abel">
-                    {" "}
-                    Menu
-                  </h1>
-                  <Image
-                    src={dropdown ? menudown : menudown}
-                    alt="menu button"
-                    className="h-[9px] w-[17px]"
-                    style={{
-                      transform: dropdown ? "rotate(0)" : "rotate(180deg)",
-                      transition: "transform 0.3s ease-in-out",
-                    }}
-                  />
-                </div>
-              </button>
 
-              {dropdown && (
-                <div className="absolute top-10 w-14 mt-5 h-[3px] -3 bg-red-500"></div>
-              )}
-            </li>
-            {dropdown && (
-              <div className="h-screen flex flex-col absolute items-center justify-around   font-bold bg-white pt-5 top-full right-0 w-full  ">
-                {nav?.map((nav, index) => (
-                  <ul
-                    key={index}
-                    className="flex flex-col items-center font-bold gap-2"
-                  >
-                    <li>
-                      <Link
-                        href={nav.link}
-                        className={
-                          router.query.type === nav.link ? "text-red-500" : ""
-                        }
-                        onClick={() => setActiveLink(nav.link)}
-                      >
-                        <h1 className="uppercase text-[20px] font-abel-pro font-semibold">
-                          {nav.name}
-                        </h1>
-                      </Link>
-                    </li>
-                  </ul>
-                ))}
+          <button
+            onClick={() => setOpen(true)}
+            className="inline-flex items-center justify-center rounded-xl border border-black/10 bg-white px-3 py-2 shadow-sm active:scale-[0.98] transition"
+            aria-label="Open menu"
+          >
+            <FiMenu className="text-2xl text-black" />
+          </button>
+        </div>
+      </nav>
 
-                {connect?.map((socialaccount, index) => (
-                  <ul
-                    key={index}
-                    className="flex flex-col items-center text-xl font-bold gap-2 pb-2"
-                  >
-                    <li>
-                      <a
-                        className="font-abel-pro font-light text-gray-400 hover:after:h-1 hover:after:bg-red-500 hover:after:w-20 hover:after:absolute hover:after:block"
-                        target="_blank"
-                        href={socialaccount.link}
-                      >
-                        {socialaccount.name}
-                      </a>
-                    </li>
-                  </ul>
-                ))}
-              </div>
-            )}
-          </ul>
-        </nav>
-      </div>
+      {/* Backdrop */}
+      <div
+        className={`fixed inset-0 z-[9998] bg-black/50 transition-opacity duration-200 ${
+          open ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setOpen(false)}
+      />
+
+      {/* Drawer panel */}
+      <aside
+        className={`fixed top-0 right-0 h-screen w-[85%] max-w-sm z-[9999] bg-white shadow-2xl border-l border-black/10
+        transition-transform duration-300 ${open ? "translate-x-0" : "translate-x-full"}`}
+        aria-hidden={!open}
+      >
+        {/* Drawer header */}
+        <div className="h-16 flex items-center justify-between px-4 border-b border-black/10">
+          <div className="flex items-center gap-3">
+            <Image src={logo} alt="logo" className="h-9 w-auto" priority />
+          </div>
+
+          <button
+            onClick={() => setOpen(false)}
+            className="inline-flex items-center justify-center rounded-xl border border-black/10 bg-white px-3 py-2 shadow-sm active:scale-[0.98] transition"
+            aria-label="Close menu"
+          >
+            <FiX className="text-2xl text-black" />
+          </button>
+        </div>
+
+        {/* Drawer body */}
+        <div className="px-4 py-5 space-y-3 overflow-y-auto h-[calc(100vh-64px)]">
+          <Link
+            href="/"
+            className={linkClass(pathname === "/")}
+            onClick={() => setOpen(false)}
+          >
+            <span>Home</span>
+            <span className="opacity-70">→</span>
+          </Link>
+
+          <Link
+            href="/match"
+            className={linkClass(pathname === "/match")}
+            onClick={() => setOpen(false)}
+          >
+            <span>Matches</span>
+            <span className="opacity-70">→</span>
+          </Link>
+
+          <Link
+            href="/gallery"
+            className={linkClass(pathname === "/gallery")}
+            onClick={() => setOpen(false)}
+          >
+            <span>Gallery</span>
+            <span className="opacity-70">→</span>
+          </Link>
+
+          <Link
+            href="/team"
+            className={linkClass(pathname === "/team")}
+            onClick={() => setOpen(false)}
+          >
+            <span>Team</span>
+            <span className="opacity-70">→</span>
+          </Link>
+
+          {/* Connect (with dropdown) */}
+          <button
+            type="button"
+            onClick={() => setConnectOpen((v) => !v)}
+            className={linkClass(pathname === "/connect")}
+          >
+            <span>Connect</span>
+            <FiChevronDown
+              className={`text-xl transition-transform ${connectOpen ? "rotate-180" : ""}`}
+            />
+          </button>
+
+          <div
+            className={`overflow-hidden transition-all duration-300 ${
+              connectOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+            }`}
+          >
+            <div className="mt-2 rounded-xl border border-black/10 bg-black/[0.03] p-3 grid grid-cols-2 gap-3">
+              {socials.map((s) => (
+                <a
+                  key={s.name}
+                  href={s.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-lg bg-white px-3 py-3 text-center text-sm font-semibold text-black shadow-sm border border-black/10 hover:bg-black hover:text-white transition"
+                >
+                  {s.name}
+                </a>
+              ))}
+            </div>
+
+            <Link
+              href="/connect"
+              onClick={() => setOpen(false)}
+              className="mt-3 block text-center text-sm font-semibold underline text-black/70 hover:text-black"
+            >
+              Go to Connect page →
+            </Link>
+          </div>
+
+          {/* Footer note */}
+          <div className="mt-6 rounded-2xl border border-black/10 bg-black/[0.03] p-4">
+            <p className="text-sm text-black/70">
+              Chill Together. Win Together.
+            </p>
+          </div>
+        </div>
+      </aside>
+
+      {/* Spacer so page content doesn't go under fixed navbar */}
+      <div className="h-16" />
     </>
   );
 };
