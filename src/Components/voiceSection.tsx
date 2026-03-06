@@ -28,7 +28,7 @@ const voices = [
   {
     name: "Ashish Ghimire",
     role: "Official Partner",
-    image: "/gallery/ashish.jpg",
+    image: "/asshishh.jpg",
     quote:
       "Chillax FC represents passion, unity, and the strength of the Nepalese community in Darwin. Supporting this club means supporting young talent and community spirit.",
   },
