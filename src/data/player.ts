@@ -145,7 +145,7 @@ export const players = [
     position: "Midfielder",
     image: "/gallery/kushal.jpg",
     age: 27,
-    dob: "1999-05-10",
+    dob: "2000/04/10",
     email: "kushanlnepal0@gmail.com",
     joined: 2024,
     foot: "Right",
