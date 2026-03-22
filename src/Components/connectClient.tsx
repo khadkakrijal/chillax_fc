@@ -18,7 +18,7 @@ export default function ConnectPage() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const formEl = e.currentTarget; // ✅ store form reference first
+    const formEl = e.currentTarget;
     const form = new FormData(formEl);
     const payload = Object.fromEntries(form.entries());
 

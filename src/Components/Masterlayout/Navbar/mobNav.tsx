@@ -15,12 +15,15 @@ const MobNav = () => {
 
   const socials = useMemo(
     () => [
-      { name: "Facebook", link: "#" },
-      { name: "Instagram", link: "#" },
-      { name: "LinkedIn", link: "#" },
-      { name: "Youtube", link: "#" },
-      { name: "Email", link: "#" },
-      { name: "Messenger", link: "#" },
+      {
+        name: "Facebook",
+        link: "https://www.facebook.com/profile.php?id=61579502730240",
+      },
+
+      {
+        name: "Messenger",
+        link: "https://www.facebook.com/messages/t/61579502730240",
+      },
     ],
     [],
   );
@@ -50,7 +53,7 @@ const MobNav = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-black/10">
         <div className="h-16 flex items-center justify-between px-4">
           <Link href="/" aria-label="Home" className="flex items-center gap-3">
-            <Image src={logo} alt="logo" className="h-10 w-auto" priority />
+            <Image src={logo} alt="logo" className="h-12 w-auto" priority />
           </Link>
 
           <button
@@ -80,7 +83,7 @@ const MobNav = () => {
         {/* Drawer header */}
         <div className="h-16 flex items-center justify-between px-4 border-b border-black/10">
           <div className="flex items-center gap-3">
-            <Image src={logo} alt="logo" className="h-9 w-auto" priority />
+            <Image src={logo} alt="logo" className="h-12 w-auto" priority />
           </div>
 
           <button
