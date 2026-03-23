@@ -1,4 +1,5 @@
 import ClubShowcaseSection from "@/Components/ClubShowcaseSection";
+import FacebookPageSection from "@/Components/FacebookPageSection";
 import CoverPage from "@/Components/HeroSection/Cover";
 import GallerySlider from "@/Components/HeroSection/gallerySectionSlider";
 import TeamSection from "@/Components/HeroSection/Teamsection";
@@ -16,6 +17,7 @@ export default function Home() {
       <GallerySlider images={images} />
       <TeamSection />
       <ClubShowcaseSection memories={memories} />
+      <FacebookPageSection/>
       <JoinTeamCTA />
       <VoicesSection/>
     </div>
